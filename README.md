@@ -10,6 +10,12 @@ The file list will show the following stuffs:
 
 ## Install
 
+### with melpa
+waiting
+
+### build and install package local
+`make` and extract package to directory `elpa` in emacs home directory
+
 ## Usage
 ``` elisp
 (require 'speedbar-git-respect)
