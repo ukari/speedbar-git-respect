@@ -48,10 +48,12 @@
   "Redefine Emacs `speedbar-file-lists' function.
 Create file lists for DIRECTORY."
   (if (speedbar-git-respect--vc-git-dir-p directory)
-      (let ((origin-directory default-directory))
+      (let ((origin-directory default-directory)
+            (result))
         (setq default-directory directory)
-        (speedbar-git-respect--git-file-lists directory)
-        (setq default-directory origin-directory))
+        (setq result (speedbar-git-respect--git-file-lists directory))
+        (setq default-directory origin-directory)
+        result)
     (funcall speedbar-git-respect--origin-file-lists directory)))
 
 (defun speedbar-git-respect--git-file-lists (directory)
