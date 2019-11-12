@@ -21,7 +21,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; This package will override the emacs builtin speedbar-file-lists function
+;; This package will override the Emacs builtin speedbar-file-lists function
 ;; and change its behaviour when the directory is a git repo.
 ;;
 ;; The file list will show the following stuffs:
@@ -32,12 +32,11 @@
 ;; disable the git's octal utf8 display to respect unicode.
 ;; To disable it, run `git config --global core.quotepath off`
 
+;;; Code:
 (require 'f)
 (require 'speedbar)
 (require 'vc-git)
 (require 'cl-lib)
-
-;;; Code:
 
 (defvar speedbar-git-respect--origin-file-lists (symbol-function 'speedbar-file-lists))
 
