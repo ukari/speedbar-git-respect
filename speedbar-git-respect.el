@@ -10,7 +10,7 @@
 ;; Version: 0.0.1
 ;; Url: https://github.com/ukari/speedbar-git-respect
 ;; Author: Muromi Ukari <chendianbuji@gmail.com>
-;; Package-Requires: ((f "0.8.0") (emacs "24.1") (cl-lib "0.0.1"))
+;; Package-Requires: ((f "0.8.0") (emacs "25.1"))
 
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,7 +36,7 @@
 (require 'f)
 (require 'speedbar)
 (require 'vc-git)
-(require 'cl-lib)
+(require 'seq)
 
 (defvar speedbar-git-respect--origin-file-lists (symbol-function 'speedbar-file-lists))
 
@@ -73,12 +73,12 @@ Create file lists for DIRECTORY."
             (untracked-ignored (speedbar-git-respect--file-list-process (vc-git--run-command-string nil "ls-files" "--other" "--directory" "--ignored" "--exclude-standard")))
             (dirs nil)
             (files nil))
-        (setf dirs (cl-remove-if (lambda (x) (member x (car untracked-ignored))) (car untracked-fd)))
-        (setf files (cl-remove-if (lambda (x) (member x (cadr untracked-ignored))) (cadr untracked-fd)))
+        (setf dirs (seq-filter (lambda (x) (not (member x (car untracked-ignored)))) (car untracked-fd)))
+        (setf files (seq-filter (lambda (x) (not (member x (cadr untracked-ignored)))) (cadr untracked-fd)))
         (setf dirs (delete-dups (append (car tracked-fd) dirs)))
         (setf files (delete-dups (append (cadr tracked-fd) files)))
-        (setf dirs (cl-remove-if (lambda (x) (>= 0 (length x))) dirs))
-        (setf files (cl-remove-if (lambda (x) (>= 0 (length x))) files))
+        (setf dirs (seq-filter (lambda (x) (< 0 (length x))) dirs))
+        (setf files (seq-filter (lambda (x) (< 0 (length x))) files))
         (setf dirs (sort dirs #'string>))
         (setf files (sort files #'string>))
 	(let ((nl (cons (nreverse dirs) (list (nreverse files))))
