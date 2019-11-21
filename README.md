@@ -18,7 +18,7 @@ waiting
 
 ## Usage
 ``` elisp
-(require 'speedbar-git-respect)
+(speedbar-git-respect-mode t)
 ```
 
 ## Screenshot

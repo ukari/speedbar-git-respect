@@ -7,7 +7,7 @@
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
 
-;; Version: 0.0.2
+;; Version: 0.1.0
 ;; Url: https://github.com/ukari/speedbar-git-respect
 ;; Author: Muromi Ukari <chendianbuji@gmail.com>
 ;; Package-Requires: ((f "0.8.0") (emacs "25.1"))
@@ -38,15 +38,42 @@
 (require 'vc-git)
 (require 'seq)
 
-(defvar speedbar-git-respect--origin-file-lists (symbol-function 'speedbar-file-lists))
+(defgroup speedbar-git-respect nil "Particular respect git repo in speedbar" :group 'speedbar)
+
+;;;###autoload
+(define-minor-mode speedbar-git-respect-mode
+  "Toggle speedbar-git-respect mode"
+  :init-value nil
+  :global t
+  :lighter " Speedbar-Git"
+  :group 'speedbar-git-respect
+  (if speedbar-git-respect-mode
+      (speedbar-git-respect--enable)
+    (speedbar-git-respect--disable)))
+
+(defun speedbar-git-respect--enable ()
+  "Enable speedbar git respect mode."
+  (setq speedbar-git-respect-mode t)
+  (advice-add #'speedbar-file-lists :around #'speedbar-git-respect--speedbar-file-lists))
+
+(defun speedbar-git-respect--disable ()
+  "Disable speedbar git respect mode."
+  (setq speedbar-git-respect-mode nil)
+  (advice-remove #'speedbar-file-lists #'speedbar-git-respect--speedbar-file-lists))
+
+(defun speedbar-git-respect--toggle ()
+  "Toggle speedbar git respect mode."
+  (if speedbar-git-respect-mode
+      (speedbar-git-respect--disable)
+    (speedbar-git-respect--enable)))
 
 (defun speedbar-git-respect--vc-git-dir-p (directory)
   "Check if DIRECTORY a git repo."
   (eq 'Git (condition-case nil (vc-responsible-backend directory) (error nil))))
 
-(defun speedbar-file-lists (directory)
-  "Redefine Emacs `speedbar-file-lists' function.
-Create file lists for DIRECTORY."
+(defun speedbar-git-respect--speedbar-file-lists (origin directory)
+  "Create file lists for DIRECTORY.
+ORIGIN is function `speedbar-file-lists'"
   (if (speedbar-git-respect--vc-git-dir-p directory)
       (let ((origin-directory default-directory)
             (result))
@@ -54,7 +81,7 @@ Create file lists for DIRECTORY."
         (setq result (speedbar-git-respect--git-file-lists directory))
         (setq default-directory origin-directory)
         result)
-    (funcall speedbar-git-respect--origin-file-lists directory)))
+    (funcall origin directory)))
 
 (defun speedbar-git-respect--git-file-lists (directory)
   "Create file lists for DIRECTORY which is git repo."
