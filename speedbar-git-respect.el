@@ -7,7 +7,7 @@
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
 
-;; Version: 0.0.1
+;; Version: 0.0.2
 ;; Url: https://github.com/ukari/speedbar-git-respect
 ;; Author: Muromi Ukari <chendianbuji@gmail.com>
 ;; Package-Requires: ((f "0.8.0") (emacs "25.1"))
