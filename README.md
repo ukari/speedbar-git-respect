@@ -11,7 +11,9 @@ The file list will show the following stuffs:
 ## Install
 
 ### with melpa
-waiting
+```
+M-x package-install RET speedbar-git-respect RET
+```
 
 ### build and install package local
 `make` and extract package to directory `elpa` in emacs home directory
