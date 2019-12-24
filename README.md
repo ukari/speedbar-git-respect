@@ -1,4 +1,6 @@
 # speedbar-git-respect
+[![MELPA](https://melpa.org/packages/speedbar-git-respect-badge.svg)](https://melpa.org/#/speedbar-git-respect)
+
 Particular respect git repo in speedbar
 
 ## About
