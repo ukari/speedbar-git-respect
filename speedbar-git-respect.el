@@ -7,7 +7,7 @@
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
 
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; Url: https://github.com/ukari/speedbar-git-respect
 ;; Author: Muromi Ukari <chendianbuji@gmail.com>
 ;; Package-Requires: ((f "0.8.0") (emacs "25.1"))
@@ -48,8 +48,8 @@
   :lighter " Speedbar-Git"
   :group 'speedbar-git-respect
   (if speedbar-git-respect-mode
-      (speedbar-git-respect--enable)
-    (speedbar-git-respect--disable)))
+      (speedbar-git-respect--disable)
+    (speedbar-git-respect--enable)))
 
 (defun speedbar-git-respect--enable ()
   "Enable speedbar git respect mode."
