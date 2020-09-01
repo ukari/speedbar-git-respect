@@ -48,8 +48,8 @@
   :lighter " Speedbar-Git"
   :group 'speedbar-git-respect
   (if speedbar-git-respect-mode
-      (speedbar-git-respect--disable)
-    (speedbar-git-respect--enable)))
+      (speedbar-git-respect--enable)
+    (speedbar-git-respect--disable)))
 
 (defun speedbar-git-respect--enable ()
   "Enable speedbar git respect mode."
